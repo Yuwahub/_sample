@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+$(function() {
+
+	$('#productImg img').hide().fadeIn(1000);
+
+	//リスト画像の透明度を確定させる関数
+	var mainimgLink = $('#productImg img').attr('src');
+	function changeImgOpacity(){
+		$('#productImgList img').each(function(){
+			if ($(this).attr('src') == mainimgLink){
+				$(this).fadeTo(0,1);
+			} else {
+				$(this).fadeTo(0,0.6);
+			}
+		})
+	}
+
+
+	//リスト画像にマウスオーバーしたとき
+	$('#productImgList img').hover(function(){
+		//もとのメインの画像をフェイドアウトさせたあと、
+		//マウスオ―バーしたものの画像をフェイドイン
+		var imglink = $(this).eq(0).attr('src');
+		$('#productImg img').fadeOut(function(){
+			($('#productImg img').attr('src',imglink)).fadeIn();
+		});
+		mainimgLink = imglink;
+		changeImgOpacity();
+		return false;
+
+	//マウスオーバー外れた時何もしない
+	},function(){
+	});
+
+	changeImgOpacity();
+	
+	//クリックしても何もしない（けどjs切ってる人は大きい画像を表示）
+	$('div#productImgList a').click(function(){
+		return false;
+	});
+
+});
+	</script>
+	<style type="text/css">
+#productImgList li {
+	display: inline;
+}
+#productImgList li img {
+	width: 180px;
+}
+	</style>
+</head>
+
+<body>
+
+<!-- メインの写真 -->
+<div id="productImg">
+	<img src="img/flower1.jpg" alt="花1">
+</div>
+
+<!-- 切り替える写真一覧 -->
+<div id="productImgList">
+	<ul>
+		<li><a href="img/flower1.jpg"><img src="img/flower1.jpg" alt="花1"></a></li>
+		<li><a href="img/flower2.jpg"><img src="img/flower2.jpg" alt="花2"></a></li>
+		<li><a href="img/flower3.jpg"><img src="img/flower3.jpg" alt="花3"></a></li>
+	</ul>
+</div>
+
+</body></html>
